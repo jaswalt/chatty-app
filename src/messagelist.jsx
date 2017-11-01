@@ -10,14 +10,22 @@ class MessageList extends Component {
   // const messageContent = {this.props.messages.content}.map(())
 
   render() {
-    const lists = this.props.messages.map((m) => {
-      return <li>{m.content}</li>;
+    const messages = this.props.messages.map((m) => {
+      //return <li key={m.id}><h3>{m.username}</h3>{m.content}</li>;
+
+      return (
+        <div key={ m.id } className="message">
+          <span className="message-username">{ m.username }</span>
+          <span className="message-content">{ m.content }</span>
+        </div>
+      );
+
     });
 
     return (
-      <ul>
-        { lists }
-      </ul>
+      <main className="messages">
+        { messages }
+      </main>
     );
   }
 }
