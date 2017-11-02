@@ -9,24 +9,12 @@ class App extends Component {
     this.socket = undefined;
     this.state = {
       currentUser: {name: "Bob"},
-      messages: [
-        {
-          id: 1,
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 2,
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      messages: [] // messages coming from the server will be stored here as they arrive
     };
   }
 
   addMessage = (message) => {
     let newMessage = {
-      id: new Date().getUTCMilliseconds(),
       username: "Anonymous",
       content: message
     };
