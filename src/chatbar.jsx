@@ -7,8 +7,19 @@ class ChatBar extends Component {
     this.state = {};
   }
 
+  handleEnter = (e) => {
+    if (e.key === 'Enter') {
+    this.props.getMessage(e.target.value);
+    }
+  }
+
   render() {
-    return <h1>Hello, {this.props.currentUser.name}</h1>;
+    return (
+      <footer className="chatbar">
+        <input className="chatbar-username" type="text" placeholder="Your Name (Optional)" />
+        <input className="chatbar-message" type="text" placeholder="Type a message and hit ENTER" onKeyPress={ this.handleEnter } />
+      </footer>
+    );
   }
 }
 
