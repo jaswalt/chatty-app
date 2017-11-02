@@ -8,15 +8,16 @@ class App extends Component {
     super(props);
     this.socket = undefined;
     this.state = {
-      currentUser: {name: "Bob"},
+      currentUser: "",
       messages: [] // messages coming from the server will be stored here as they arrive
     };
   }
 
-  addMessage = (message) => {
+  addMessage = (username, message) => {
     let newMessage = {
-      username: "Anonymous",
-      content: message
+      username: username || "Anonymous",
+      content: message,
+      type: "USER_MESSAGE"
     };
     this.socket.send(JSON.stringify(newMessage));
     //this.setState({ messages: this.state.messages.concat(newMessage) })
@@ -26,17 +27,29 @@ class App extends Component {
     //}
   }
 
+  sendNewUsername = (username) => {
+    let notification = {
+      username: username,
+      type: "NAME_CHANGE"
+    }
+    this.socket.send(JSON.stringify(notification));
+  }
+
   render() {
     return (
       <div>
-        <ChatBar currentUser={ this.state.currentUser } getMessage={ this.addMessage } />
+        <ChatBar
+          currentUser={ this.state.currentUser }
+          getMessage={ this.addMessage }
+          onNewUsername={ this.sendNewUsername }
+        />
         <MessageList messages={ this.state.messages } />
       </div>);
   }
 
   handleWSMessageReceived = (newMessage) => {
     newMessage = JSON.parse(newMessage.data)
-    this.setState({ messages: this.state.messages.concat(newMessage) })
+    this.setState({ messages: this.state.messages.concat(newMessage), currentUser: this.state.currentUser })
   }
 
   componentDidMount() {
