@@ -18,12 +18,14 @@ class MessageList extends Component {
     return (
       <main className="messages">
         { this.props.messages.map( message => {
-          console.log(message)
           if (message.type === 'NAME_CHANGE') {
             return <Notification key={ message.id } oldUsername={ message.oldUsername } newUsername={ message.newUsername } />;
-          } else {
+          } else if (message.type === 'USER_MESSAGE'){
             return <Message key={ message.id } username={ message.username } content={ message.content } />
-          } }) }
+          } else {
+            throw "unknown type";
+          }
+        }) }
       </main>
     );
   }
