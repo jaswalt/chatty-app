@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.socket = undefined;
     this.state = {
-      currentUser: "",
+      currentUser: null,
       messages: [] // messages coming from the server will be stored here as they arrive
     };
   }
@@ -29,9 +29,15 @@ class App extends Component {
 
   sendNewUsername = (username) => {
     let notification = {
-      username: username,
+      oldUsername: this.state.currentUser || "Anonymous",
+      newUsername: username || "Anonymous",
       type: "NAME_CHANGE"
     }
+
+    const messages = this.state.messages.concat(notification)
+      // Update the state of the app component.
+      // Calling setState will trigger a call to render() in App and all child components.
+    this.setState({currentUser: username})
     this.socket.send(JSON.stringify(notification));
   }
 

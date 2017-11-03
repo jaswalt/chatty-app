@@ -33,7 +33,7 @@ wss.on('connection', (ws) => {
     let msg = JSON.parse(message);
     msg['id'] = uuidv1();
     wss.broadcast(JSON.stringify(msg));
-
+    console.log("MSG: " + msg.type)
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
