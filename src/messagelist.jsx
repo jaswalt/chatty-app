@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Message from './Message.jsx';
+import Notification from './Notification.jsx';
 
 class MessageList extends Component {
 
@@ -8,23 +10,20 @@ class MessageList extends Component {
   }
 
   // const messageContent = {this.props.messages.content}.map(())
+  // <div class="message system">
+  //   Anonymous1 changed their name to nomnom.
+  // </div>
 
   render() {
-    const messages = this.props.messages.map((m) => {
-      //return <li key={m.id}><h3>{m.username}</h3>{m.content}</li>;
-
-      return (
-        <div key={ m.id } className="message">
-          <span className="message-username">{ m.username }</span>
-          <span className="message-content">{ m.content }</span>
-        </div>
-      );
-
-    });
-
     return (
       <main className="messages">
-        { messages }
+        { this.props.messages.map( message => {
+          console.log(message)
+          if (message.type === 'NAME_CHANGE') {
+            return <Notification key={ message.id } oldUsername={ message.oldUsername } newUsername={ message.newUsername } />;
+          } else {
+            return <Message key={ message.id } username={ message.username } content={ message.content } />
+          } }) }
       </main>
     );
   }
