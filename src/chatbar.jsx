@@ -13,7 +13,7 @@ class ChatBar extends Component {
 
   onContentEnter = (e) => {
     if (e.key === 'Enter') {
-      this.props.getMessage(this.state.username, this.state.content);
+      this.props.getMessage(this.props.currentUser, this.state.content);
     }
   }
 
